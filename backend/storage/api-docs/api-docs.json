@@ -1,0 +1,311 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API para teste da Gazin Tech",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/desenvolvedores": {
+            "get": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Lista desenvolvedores",
+                "operationId": "a2f10e2f05c68ccdc91d60ca4f4f9698",
+                "responses": {
+                    "200": {
+                        "description": "Lista de desenvolvedores"
+                    },
+                    "404": {
+                        "description": "Nenhum desenvolvedor encontrado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Cria um novo desenvolvedor",
+                "operationId": "9f01e2e1cef788135ebeb57416d56240",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "nivel_id"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "nivel_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Desenvolvedor criado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/desenvolvedores/{id}": {
+            "get": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Busca um desenvolvedor por ID",
+                "operationId": "db931a563f36b4186d4d84e5b7fc02a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Desenvolvedor encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Deleta um desenvolvedor",
+                "operationId": "866672a7cb563d6de819659be852824c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Desenvolvedor deletado com sucesso"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Desenvolvedores"
+                ],
+                "summary": "Atualiza um desenvolvedor",
+                "operationId": "5b350bdc03573ae329503a03fceaaab2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do desenvolvedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "nivel_id"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "nivel_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Desenvolvedor atualizado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/niveis": {
+            "get": {
+                "tags": [
+                    "Niveis"
+                ],
+                "summary": "Lista niveis",
+                "operationId": "c2450f9bebd9bef566431b90025eb72e",
+                "responses": {
+                    "200": {
+                        "description": "Lista de niveis"
+                    },
+                    "404": {
+                        "description": "Nenhum nível encontrado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Niveis"
+                ],
+                "summary": "Cria um novo nível",
+                "operationId": "7e2e9a142d927266a8a42d2c65d23214",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nivel"
+                                ],
+                                "properties": {
+                                    "nivel": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Nível criado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/niveis/{id}": {
+            "get": {
+                "tags": [
+                    "Niveis"
+                ],
+                "summary": "Obtém um nível específico",
+                "operationId": "0c5ed755ccb54bbf0612d3c5a491090f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do nível",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nível encontrado"
+                    },
+                    "404": {
+                        "description": "Nível não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Niveis"
+                ],
+                "summary": "Atualiza um nível existente",
+                "operationId": "29f81628b2a81419859b8adf6677ebfd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do nível",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nivel"
+                                ],
+                                "properties": {
+                                    "nivel": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nível atualizado com sucesso"
+                    },
+                    "404": {
+                        "description": "Nível não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Niveis"
+                ],
+                "summary": "Deleta um nível existente",
+                "operationId": "0ab7b43dbade643088ca6b376d14a960",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do nível",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Nível deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Nível não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Desenvolvedores",
+            "description": "Desenvolvedores"
+        },
+        {
+            "name": "Niveis",
+            "description": "Niveis"
+        }
+    ]
+}

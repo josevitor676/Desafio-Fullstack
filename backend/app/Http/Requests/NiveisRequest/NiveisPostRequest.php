@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\NiveisRequest;
 
 use App\Constants\NiveisMessages;
 use Illuminate\Contracts\Validation\Validator;
