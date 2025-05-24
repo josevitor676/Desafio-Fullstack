@@ -16,11 +16,22 @@ class NiveisService {
   
   public function listAll()
   {
-    $niveis = Niveis::all();
+    $perPage = request()->query('per_page', 10);
+
+    $niveis = Niveis::orderBy('id', 'desc')->paginate($perPage);
+
     if($niveis->isEmpty()) {
         return response(null, 404);
     }
-    return NiveisResource::collection($niveis);
+    return response()->json([
+        'data' => NiveisResource::collection($niveis),
+        'meta' => [
+            'total' => $niveis->total(),
+            'per_page' => $niveis->perPage(),
+            'current_page' => $niveis->currentPage(),
+            'last_page' => $niveis->lastPage(),
+        ]
+    ]);
   }
 
   public function createNivel(NiveisPostRequest $request)

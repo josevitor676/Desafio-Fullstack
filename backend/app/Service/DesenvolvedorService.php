@@ -14,11 +14,23 @@ class DesenvolvedorService
 {
   public function listAll()
   {
-    $desenvolvedores = Desenvolvedores::all();
-    if($desenvolvedores->isEmpty()) {
-      return response(null, 404);
+    $perPage = request()->query('per_page', 10);
+
+    $desenvolvedores = Desenvolvedores::orderBy('id', 'desc')->paginate($perPage);
+
+    if ($desenvolvedores->isEmpty()) {
+        return response(null, 404);
     }
-    return DesenvolvedorResource::collection($desenvolvedores);
+
+    return response()->json([
+        'data' => DesenvolvedorResource::collection($desenvolvedores),
+        'meta' => [
+            'total' => $desenvolvedores->total(),
+            'per_page' => $desenvolvedores->perPage(),
+            'current_page' => $desenvolvedores->currentPage(),
+            'last_page' => $desenvolvedores->lastPage(),
+        ]
+    ]);
   }
 
   public function createDesenvolvedor(DesenvolvedorPostRequest $request)
