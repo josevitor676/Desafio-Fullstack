@@ -17,9 +17,13 @@ class NiveisService {
   public function listAll()
   {
     $perPage = request()->query('per_page', 10);
+    $pesquisa = request()->query('pesquisa', '');
 
     $niveis = Niveis::withCount('desenvolvedores')
-                    ->orderBy('id', 'desc')
+                    ->when($pesquisa, function ($query) use ($pesquisa) {
+                        $query->whereRaw('LOWER(nivel) LIKE ?', ['%' . strtolower($pesquisa) . '%']);
+                    })
+                    ->orderBy('updated_at', 'desc')
                     ->paginate($perPage);
 
     if ($niveis->isEmpty()) {

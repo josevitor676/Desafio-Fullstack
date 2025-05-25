@@ -15,8 +15,14 @@ class DesenvolvedorService
   public function listAll()
   {
     $perPage = request()->query('per_page', 10);
+    $pesquisa = request()->query('pesquisa', '');
 
-    $desenvolvedores = Desenvolvedores::orderBy('id', 'desc')->paginate($perPage);
+    $desenvolvedores = Desenvolvedores::orderBy('updated_at', 'desc')
+                          ->when($pesquisa, function ($query) use ($pesquisa) {
+                              $query->whereRaw('LOWER(nome) LIKE ?', ['%' . strtolower($pesquisa) . '%']);
+                          })
+                          ->paginate($perPage);
+
 
     if ($desenvolvedores->isEmpty()) {
         return response(null, 404);

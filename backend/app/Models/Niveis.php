@@ -11,6 +11,8 @@ class Niveis extends Model
 {
     protected $fillable = [
         'nivel',
+        'creadet_at',
+        'updated_at',
     ];
 
     public function desenvolvedores(): HasMany

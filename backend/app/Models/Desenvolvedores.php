@@ -12,6 +12,8 @@ class Desenvolvedores extends Model
         'data_nascimento',
         'hobby',
         'nivel_id',
+        'creadet_at',
+        'updated_at',
     ];
 
     public function nivel()
