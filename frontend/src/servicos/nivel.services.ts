@@ -24,9 +24,9 @@ export const editarNivel = async (id: string, dto: FormNivelSchemaProps) => {
   return response.data;
 }
 
-export const getNiveis = async (page = 1, per_page = 10): Promise<Page<Nivel>> => {
+export const getNiveis = async (page = 1, per_page = 10, pesquisa = ''): Promise<Page<Nivel>> => {
   const response = await axios.get(`${url}/${base}`, {
-    params: { page, per_page },
+    params: { page, per_page, pesquisa },
   });
   return response.data;
 };
@@ -37,10 +37,10 @@ export const getNivelById = async (id: string): Promise<Nivel> => {
 };
 
 
-export const useGetNiveis = (page = 1, per_page = 10) => {
+export const useGetNiveis = (page = 1, per_page = 10, pesquisa = '') => {
   return useQuery<Page<Nivel>, Error>({
-    queryKey: ["niveis", page, per_page],
-    queryFn: () => getNiveis(page, per_page),
+    queryKey: ["niveis", page, per_page, pesquisa],
+    queryFn: () => getNiveis(page, per_page, pesquisa),
     refetchOnWindowFocus: false,
   });
 };

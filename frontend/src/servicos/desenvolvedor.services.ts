@@ -24,9 +24,9 @@ export const editarDesenvolvedor = async (id: string, dto: DesenvolvedorEditPayl
   return response.data;
 }
 
-export const getDesenvolvedores = async (page = 1, per_page = 10): Promise<Page<Desenvolvedor>> => {
+export const getDesenvolvedores = async (page = 1, per_page = 10, pesquisa = ''): Promise<Page<Desenvolvedor>> => {
   const response = await axios.get(`${url}/${base}`, {
-    params: { page, per_page },
+    params: { page, per_page, pesquisa },
   });
   return response.data;
 };
@@ -36,10 +36,10 @@ export const getDesenvolvedorById = async (id: string): Promise<Desenvolvedor> =
   return response.data;
 }
 
-export const useGetDesenvolvedores = (page = 1, per_page = 10) => {
+export const useGetDesenvolvedores = (page = 1, per_page = 10, pesquisa = '') => {
   return useQuery<Page<Desenvolvedor>, Error>({
-    queryKey: ["desenvolvedores", page, per_page],
-    queryFn: () => getDesenvolvedores(page, per_page),
+    queryKey: ["desenvolvedores", page, per_page, pesquisa],
+    queryFn: () => getDesenvolvedores(page, per_page, pesquisa),
     refetchOnWindowFocus: false,
   });
 };
