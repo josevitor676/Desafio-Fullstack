@@ -1,8 +1,12 @@
 import { FormularioEditarDesenvolvedor } from "@/components/formulario/desenvolvedor/FormularioEditarDesenvolvedor";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useSubmitDesenvolvedorEdit } from "@/hooks/desenvolvedor/useSubmitDesenvolvedorEdit";
+import { useToast } from "@/hooks/use-toast";
+import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
 import type { Desenvolvedor } from "@/interfaces/DesenvolvedorInterface";
 import { FormDesenvolvedorEditSchema, type FormDesenvolvedorEditSchemaProps } from "@/schemas/desenvolvedor";
+import { useEditarDesenvolvedor } from "@/servicos/desenvolvedor.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,32 +16,42 @@ interface ModalEditarDesenvolvedorProps {
   desenvolvedor: Desenvolvedor;
 }
 
-export const ModalEditarDesenvolvedor = ({desenvolvedor}: ModalEditarDesenvolvedorProps) => {
+export const ModalEditarDesenvolvedor = ({ desenvolvedor }: ModalEditarDesenvolvedorProps) => {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+  const { handleApiError } = useApiErrorHandler();
+  const editarDesenvolvedorMutation = useEditarDesenvolvedor();
 
-  const { control, register, handleSubmit, formState: { errors }, reset } = useForm<FormDesenvolvedorEditSchemaProps>({
+  const { control, register, handleSubmit, formState: { errors }, reset, watch } = useForm<FormDesenvolvedorEditSchemaProps>({
     resolver: zodResolver(FormDesenvolvedorEditSchema),
     defaultValues: {}
   })
+
+
+  const { onSubmit } = useSubmitDesenvolvedorEdit({
+    editarDesenvolvedorMutation,
+    toast,
+    reset,
+    setOpen,
+    handleApiError,
+    desenvolvedor
+  });
 
   const handleCancel = () => {
     reset();
     setOpen(false);
   };
 
-  const onSubmit = (data: FormDesenvolvedorEditSchemaProps) => {
-    console.log(data);
-    reset();
-    setOpen(false);
-  };
 
-   useEffect(() => {
+  useEffect(() => {
     if (open && desenvolvedor) {
       reset({
         nome: desenvolvedor.nome,
         nivel_id: desenvolvedor.nivel.id,
         sexo: desenvolvedor.sexo === "M" || desenvolvedor.sexo === "F" ? desenvolvedor.sexo : undefined,
-        data_nascimento: desenvolvedor.data_nascimento ? new Date(desenvolvedor.data_nascimento) : undefined,
+        data_nascimento: desenvolvedor.data_nascimento
+          ? new Date(desenvolvedor.data_nascimento)
+          : undefined,
         hobby: desenvolvedor.hobby,
       });
     }
@@ -58,6 +72,7 @@ export const ModalEditarDesenvolvedor = ({desenvolvedor}: ModalEditarDesenvolved
           onCancel={handleCancel}
           register={register}
           control={control}
+          watch={watch}
         />
       </DialogContent>
     </Dialog>

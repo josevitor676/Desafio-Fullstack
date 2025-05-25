@@ -1,7 +1,11 @@
 import { FormularioAdicionarDesenvolvedor } from "@/components/formulario/desenvolvedor/FormularioAdicionarDesenvolvedor";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
+import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
+import { useSubmitDesenvolvedorCreate } from "@/hooks/desenvolvedor/useSubmitDesenvolvedorCreate";
 import { FormDesenvolvedorSchema, type FormDesenvolvedorSchemaProps } from "@/schemas/desenvolvedor";
+import { useCriarDesenvolvedor } from "@/servicos/desenvolvedor.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState } from "react";
@@ -9,6 +13,9 @@ import { useForm } from "react-hook-form";
 
 export const ModalAdicionarDesenvolvedor = () => {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+  const { handleApiError } = useApiErrorHandler();
+  const criarDesenvolvedorMutation = useCriarDesenvolvedor();
 
   const { control, register, handleSubmit, formState: { errors }, reset } = useForm<FormDesenvolvedorSchemaProps>({
     resolver: zodResolver(FormDesenvolvedorSchema),
@@ -19,11 +26,13 @@ export const ModalAdicionarDesenvolvedor = () => {
     setOpen(false);
   };
 
-  const onSubmit = (data: FormDesenvolvedorSchemaProps) => {
-    console.log(data);
-    reset();
-    setOpen(false);
-  };
+  const { onSubmit } = useSubmitDesenvolvedorCreate({
+    criarDesenvolvedorMutation,
+    toast,
+    reset,
+    setOpen,
+    handleApiError
+  });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

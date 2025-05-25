@@ -8,13 +8,14 @@ import { Paginacao } from "../paginacao/Paginacao";
 import { Input } from "../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { TabsContent } from "../ui/tabs";
+import { useDebounce } from "@/lib/utils";
 
 export function TabelaDesenvolvedor() {
+  const [pesquisaDesenvolvedor, setPesquisaDesenvolvedor] = useState("")
   const [page, setPage] = useState(1);
   const per_page = 8;
-
-  const { data, isLoading, error } = useGetDesenvolvedores(page, per_page);
-
+  const debouncedSearch = useDebounce(pesquisaDesenvolvedor, 500);
+  const { data, isLoading, error } = useGetDesenvolvedores(page, per_page, debouncedSearch);
   const desenvolvedores = data?.data ?? [];
   const meta = data?.meta;
 
@@ -22,7 +23,7 @@ export function TabelaDesenvolvedor() {
     <TabsContent value="desenvolvedores" className="p-3  mt-4">
       <div className='flex gap-2 mb-3 justify-between'>
         <div className="w-2/4 gap-2 flex flex-col">
-          <Input placeholder='Pesquisar Desenvolvedor' />
+          <Input placeholder='Pesquisar Desenvolvedor' value={pesquisaDesenvolvedor} onChange={(e) => setPesquisaDesenvolvedor(e.target.value)} />
           <span className="text-xs text-gray-500">Total de {meta?.total ?? 0} itens</span>
         </div>
         <ModalAdicionarDesenvolvedor />

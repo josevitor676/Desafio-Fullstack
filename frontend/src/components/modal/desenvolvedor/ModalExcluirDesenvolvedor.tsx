@@ -1,16 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useSubmitDesenvolvedorDelete } from "@/hooks/desenvolvedor/useSubmitDesenvolvedorDelete";
+import { useToast } from "@/hooks/use-toast";
+import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
+import { useDeletarDesenvolvedor } from "@/servicos/desenvolvedor.services";
 import { Trash } from "lucide-react";
 import { useState } from "react";
 
-export function ModalExcluirDesenvolvedor(){
+interface ModalExcluirDesenvolvedorProps {
+  id: string;
+}
+
+export function ModalExcluirDesenvolvedor({id}: ModalExcluirDesenvolvedorProps){
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+  const { handleApiError } = useApiErrorHandler();
+  const deletarDesenvolvedorMutation = useDeletarDesenvolvedor();
   
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Form submitted");
-    setOpen(false);
-  };
+  const { handleSubmit } = useSubmitDesenvolvedorDelete({
+    deletarDesenvolvedorMutation,
+    toast,
+    setOpen,
+    handleApiError
+  });
 
   const handleCancel = () => {
     setOpen(false);
@@ -30,7 +42,7 @@ export function ModalExcluirDesenvolvedor(){
           <p>Tem certeza que desejar excluir um desenvolvedor.</p>
         </div>
         <DialogFooter>
-          <Button type="submit" className='hover:border-none border-none' onClick={handleSubmit}>Excluir</Button>
+          <Button type="submit" className='hover:border-none border-none' onClick={() => handleSubmit(id)}>Excluir</Button>
           <Button type="button" className='hover:border-none border-none' onClick={handleCancel}>Cancelar</Button>
         </DialogFooter>
       </DialogContent>

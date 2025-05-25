@@ -8,14 +8,14 @@ import { Input } from "../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { TabsContent } from "../ui/tabs";
 import { Carregando } from "../carregando/Carregando";
+import { useDebounce } from "@/lib/utils";
 
 export function TabelaNivel() {
-
+  const [pesquisaNivel, setPesquisaNivel] = useState("")
   const [page, setPage] = useState(1);
   const per_page = 8;
-
-  const { data, isLoading, error } = useGetNiveis(page, per_page);
-
+  const debouncedSearch = useDebounce(pesquisaNivel, 500);
+  const { data, isLoading, error } = useGetNiveis(page, per_page, debouncedSearch);
   const niveis = data?.data ?? [];
   const meta = data?.meta;
 
@@ -23,7 +23,7 @@ export function TabelaNivel() {
     <TabsContent value="niveis" className="p-3  mt-4">
       <div className='flex gap-2 mb-3 justify-between'>
         <div className="w-2/4 gap-2 flex flex-col">
-          <Input placeholder='Pesquisar Nível' />
+          <Input placeholder='Pesquisar Nível' value={pesquisaNivel} onChange={(e) => setPesquisaNivel(e.target.value)}/>
           <span className="text-xs text-gray-500">Total de {meta?.total ?? 0} itens</span>
         </div>
         <ModalAdicionarEdital tipo='adicionar' title='Adicionar Nivel' />
