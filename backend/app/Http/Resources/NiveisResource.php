@@ -16,7 +16,8 @@ class NiveisResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nivel' => $this->nivel
+            'nivel' => $this->nivel,
+            'desenvolvedores_count' => $this->desenvolvedores_count ?? 0,
         ];
     }
 }

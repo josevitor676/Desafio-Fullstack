@@ -18,11 +18,14 @@ class NiveisService {
   {
     $perPage = request()->query('per_page', 10);
 
-    $niveis = Niveis::orderBy('id', 'desc')->paginate($perPage);
+    $niveis = Niveis::withCount('desenvolvedores')
+                    ->orderBy('id', 'desc')
+                    ->paginate($perPage);
 
-    if($niveis->isEmpty()) {
+    if ($niveis->isEmpty()) {
         return response(null, 404);
     }
+
     return response()->json([
         'data' => NiveisResource::collection($niveis),
         'meta' => [
