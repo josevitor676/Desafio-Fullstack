@@ -3,3 +3,7 @@ export interface Nivel {
   nivel: string;
   desenvolvedores_count: number;
 }
+
+export interface NivelResponse {
+  data: Nivel;
+}

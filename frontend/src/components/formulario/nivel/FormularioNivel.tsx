@@ -1,17 +1,24 @@
+import { Carregando } from "@/components/carregando/Carregando";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { Nivel } from "@/interfaces/NivelInterface";
+import type { FieldErrors, UseFormRegister } from "react-hook-form";
+
+interface FormularioNivelData {
+  nivel: string;
+}
+
 
 interface FormularioNivelProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
-  register: any;
-  errors: any;
-  nivel?: Nivel | null;
+  register: UseFormRegister<FormularioNivelData>;
+  errors: FieldErrors<FormularioNivelData>;
+  isCriarNivelPending?: boolean;
+  isEditarNivelPending?: boolean;
 }
-export function FormularioNivel({ onSubmit, onCancel, register, errors, nivel }: FormularioNivelProps) {
+export function FormularioNivel({ onSubmit, onCancel, register, errors, isCriarNivelPending, isEditarNivelPending }: FormularioNivelProps) {
 
 
   return (
@@ -28,7 +35,7 @@ export function FormularioNivel({ onSubmit, onCancel, register, errors, nivel }:
         </div>
       </div>
       <DialogFooter>
-        <Button type="submit" className='hover:border-none border-none'>Salvar</Button>
+        <Button type="submit" className='hover:border-none border-none'>{isCriarNivelPending || isEditarNivelPending ? <Carregando/> : 'Salvar'}</Button>
         <Button type="button" className='hover:border-none border-none' onClick={onCancel}>Cancelar</Button>
       </DialogFooter>
     </form>

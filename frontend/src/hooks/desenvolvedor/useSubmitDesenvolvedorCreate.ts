@@ -1,9 +1,10 @@
 import { format } from "date-fns";
 import type { DesenvolvedorPayload, FormDesenvolvedorSchemaProps } from "@/schemas/desenvolvedor";
+import type { DesenvolvedorResponse } from "@/interfaces/DesenvolvedorInterface";
 
 interface UseSubmitDesenvolvedorCreateProps {
   criarDesenvolvedorMutation: {
-    mutateAsync: (payload: DesenvolvedorPayload) => Promise<any>;
+    mutateAsync: (payload: DesenvolvedorPayload) => Promise<DesenvolvedorResponse>;
   };
   toast: (options: { title: string; description: string; duration?: number }) => void;
   reset: () => void;

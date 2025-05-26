@@ -1,10 +1,10 @@
-import type { Desenvolvedor } from "@/interfaces/DesenvolvedorInterface";
+import type { Desenvolvedor, DesenvolvedorResponse } from "@/interfaces/DesenvolvedorInterface";
 import type { DesenvolvedorEditPayload, FormDesenvolvedorEditSchemaProps } from "@/schemas/desenvolvedor";
 import { format } from "date-fns";
 
 interface UseSubmitDesenvolvedorEditProps {
   editarDesenvolvedorMutation: {
-    mutateAsync: (variables: { id: string; data: DesenvolvedorEditPayload }) => Promise<any>;
+    mutateAsync: (variables: { id: string; data: DesenvolvedorEditPayload }) => Promise<DesenvolvedorResponse>;
   };
   toast: (options: { title: string; description: string; duration?: number }) => void;
   reset: () => void;

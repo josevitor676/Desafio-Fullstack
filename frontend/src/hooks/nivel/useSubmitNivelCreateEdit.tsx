@@ -1,12 +1,12 @@
 import type { FormNivelSchemaProps } from "@/schemas/nivel";
-import type { Nivel } from "@/interfaces/NivelInterface";
+import type { Nivel, NivelResponse } from "@/interfaces/NivelInterface";
 
 interface UseSubmitNivelCreateEditProps {
   criarNivelMutation: {
-    mutateAsync: (data: FormNivelSchemaProps) => Promise<any>;
+    mutateAsync: (data: FormNivelSchemaProps) => Promise<NivelResponse>;
   };
   editarNivelMutation: {
-    mutateAsync: (variables: { id: string; data: FormNivelSchemaProps }) => Promise<any>;
+    mutateAsync: (variables: { id: string; data: FormNivelSchemaProps }) => Promise<NivelResponse>;
   };
   toast: (options: { title: string; description: string; duration?: number }) => void;
   reset: () => void;

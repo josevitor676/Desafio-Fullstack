@@ -21,6 +21,7 @@ export const ModalEditarDesenvolvedor = ({ desenvolvedor }: ModalEditarDesenvolv
   const { toast } = useToast();
   const { handleApiError } = useApiErrorHandler();
   const editarDesenvolvedorMutation = useEditarDesenvolvedor();
+  const { isPending: isEditarDesenvolvedorPending } = editarDesenvolvedorMutation;
 
   const { control, register, handleSubmit, formState: { errors }, reset, watch } = useForm<FormDesenvolvedorEditSchemaProps>({
     resolver: zodResolver(FormDesenvolvedorEditSchema),
@@ -73,6 +74,7 @@ export const ModalEditarDesenvolvedor = ({ desenvolvedor }: ModalEditarDesenvolv
           register={register}
           control={control}
           watch={watch}
+          isEditarDesenvolvedorPending={isEditarDesenvolvedorPending}
         />
       </DialogContent>
     </Dialog>

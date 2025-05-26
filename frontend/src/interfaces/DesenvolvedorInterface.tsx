@@ -8,3 +8,7 @@ export interface Desenvolvedor {
   hobby: string;
   nivel: Nivel;
 }
+
+export interface DesenvolvedorResponse {
+  data: Desenvolvedor;
+}

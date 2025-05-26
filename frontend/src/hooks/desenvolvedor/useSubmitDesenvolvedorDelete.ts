@@ -1,6 +1,6 @@
 interface UseSubmitDesenvolvedorDeleteProps {
   deletarDesenvolvedorMutation: {
-    mutateAsync: (id: string) => Promise<any>;
+    mutateAsync: (id: string) => Promise<void>;
   };
   toast: (options: { title: string; description: string; duration?: number }) => void;
   setOpen: (open: boolean) => void;

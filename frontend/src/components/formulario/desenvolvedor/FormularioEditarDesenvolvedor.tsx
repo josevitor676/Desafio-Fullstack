@@ -1,3 +1,4 @@
+import { Carregando } from "@/components/carregando/Carregando";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -13,10 +14,11 @@ interface FormularioEditarDesenvolvedorProps {
   register: UseFormRegister<FormDesenvolvedorEditSchemaProps>;
   errors: FieldErrors<FormDesenvolvedorEditSchemaProps>;
   control: Control<FormDesenvolvedorEditSchemaProps>;
-  watch: UseFormWatch<FormDesenvolvedorEditSchemaProps>
+  watch: UseFormWatch<FormDesenvolvedorEditSchemaProps>;
+  isEditarDesenvolvedorPending?: boolean;
 }
 
-export function FormularioEditarDesenvolvedor({ onSubmit, onCancel, register, errors, control, watch }: FormularioEditarDesenvolvedorProps) {
+export function FormularioEditarDesenvolvedor({ onSubmit, onCancel, register, errors, control, watch, isEditarDesenvolvedorPending }: FormularioEditarDesenvolvedorProps) {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteNiveis();
 
@@ -141,7 +143,7 @@ export function FormularioEditarDesenvolvedor({ onSubmit, onCancel, register, er
         </div>
       </div>
       <DialogFooter className="mt-4">
-        <Button type="submit" className='hover:border-none border-none'>Salvar</Button>
+        <Button type="submit" className='hover:border-none border-none'>{isEditarDesenvolvedorPending ? <Carregando/> : 'Salvar'}</Button>
         <Button type="button" className='hover:border-none border-none' onClick={onCancel}>Cancelar</Button>
       </DialogFooter>
     </form>

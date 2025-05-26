@@ -1,3 +1,4 @@
+import { Carregando } from "@/components/carregando/Carregando";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -14,9 +15,10 @@ interface FormularioAdicionarDesenvolvedorProps {
   register: UseFormRegister<FormDesenvolvedorSchemaProps>;
   errors: FieldErrors<FormDesenvolvedorSchemaProps>;
   control: Control<FormDesenvolvedorSchemaProps>;
+  isCriarDesenvolvedorPending?: boolean;
 }
 
-export function FormularioAdicionarDesenvolvedor({ onSubmit, onCancel, register, errors, control }: FormularioAdicionarDesenvolvedorProps) {
+export function FormularioAdicionarDesenvolvedor({ onSubmit, onCancel, register, errors, control, isCriarDesenvolvedorPending }: FormularioAdicionarDesenvolvedorProps) {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteNiveis();
 
@@ -135,7 +137,7 @@ export function FormularioAdicionarDesenvolvedor({ onSubmit, onCancel, register,
         </div>
       </div>
       <DialogFooter className="mt-4">
-        <Button type="submit" className='hover:border-none border-none'>Salvar</Button>
+        <Button type="submit" className='hover:border-none border-none'>{isCriarDesenvolvedorPending ? <Carregando/> : 'Salvar'}</Button>
         <Button type="button" className='hover:border-none border-none' onClick={onCancel}>Cancelar</Button>
       </DialogFooter>
     </form>

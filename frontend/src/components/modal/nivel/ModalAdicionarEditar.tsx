@@ -31,6 +31,8 @@ export function ModalAdicionarEdital({ tipo, title, icon, nivel }: ModalAdiciona
   const { handleApiError } = useApiErrorHandler();
   const criarNivelMutation = useCriarNivel();
   const editarNivelMutation = useEditarNivel();
+  const { isPending: isCriarNivelPending } = criarNivelMutation;
+  const { isPending: isEditarNivelPending } = editarNivelMutation;
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormNivelSchemaProps>({
     resolver: zodResolver(FormNivelSchema),
@@ -40,6 +42,7 @@ export function ModalAdicionarEdital({ tipo, title, icon, nivel }: ModalAdiciona
     reset();
     setOpen(false);
   };
+
 
   const { onSubmit } = useSubmitNivelCreateEdit({
     criarNivelMutation,
@@ -71,11 +74,12 @@ export function ModalAdicionarEdital({ tipo, title, icon, nivel }: ModalAdiciona
         </DialogHeader>
 
         <FormularioNivel
-          nivel={tipo == 'editar' ? nivel : null}
           errors={errors}
           onSubmit={handleSubmit(onSubmit)}
           onCancel={handleCancel}
           register={register}
+          isCriarNivelPending={isCriarNivelPending}
+          isEditarNivelPending={isEditarNivelPending}
         />
       </DialogContent>
     </Dialog>

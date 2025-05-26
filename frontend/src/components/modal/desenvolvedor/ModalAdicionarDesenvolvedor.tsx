@@ -16,6 +16,7 @@ export const ModalAdicionarDesenvolvedor = () => {
   const { toast } = useToast();
   const { handleApiError } = useApiErrorHandler();
   const criarDesenvolvedorMutation = useCriarDesenvolvedor();
+  const { isPending: isCriarDesenvolvedorPending } = criarDesenvolvedorMutation;
 
   const { control, register, handleSubmit, formState: { errors }, reset } = useForm<FormDesenvolvedorSchemaProps>({
     resolver: zodResolver(FormDesenvolvedorSchema),
@@ -50,6 +51,7 @@ export const ModalAdicionarDesenvolvedor = () => {
           onCancel={handleCancel}
           register={register}
           control={control}
+          isCriarDesenvolvedorPending={isCriarDesenvolvedorPending}
         />
       </DialogContent>
     </Dialog>
