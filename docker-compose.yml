@@ -27,20 +27,24 @@ services:
       - backend
     restart: unless-stopped
 
-  db:
-    image: postgres:15-alpine
-    container_name: postgres_db
-    ports:
-      - "5433:5432"
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
     environment:
-      POSTGRES_DB: laravel
-      POSTGRES_USER: laravel
-      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: koyebdb
+      POSTGRES_USER: koyeb-adm
+      POSTGRES_PASSWORD: npg_Y7Ifbv3BuzKJ
+    ports:
+      - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
 volumes:
-  pgdata:
+  postgres-data:
+
 
 networks:
   app-network:
